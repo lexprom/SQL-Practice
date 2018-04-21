@@ -74,4 +74,4 @@ FROM Ingredient*/
 /*SELECT CONVERT(int,Калорийность) AS INT
 FROM Ingredient*/
 
---ISNULL,NULLIF
+--ISNULL
