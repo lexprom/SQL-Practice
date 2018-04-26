@@ -61,7 +61,7 @@ WHERE Название LIKE N'%р%'*/
 /*SELECT *,
 CASE
 WHEN ID_ингредиента is NULL
-THEN 'Нету в наличии '
+THEN 'Нету в наличии'
 END
 FROM Ingredient
 RIGHT OUTER JOIN Category ON Ingredient.ID_ингредиента = Category.ID_категории*/
@@ -75,3 +75,5 @@ FROM Ingredient*/
 FROM Ingredient*/
 
 --ISNULL
+/*SELECT ISNULL(ID_ингредиента, N'Нету такого ингредиента')
+FROM Ingredient ingr*/
