@@ -71,9 +71,14 @@ RIGHT OUTER JOIN Category ON Ingredient.ID_ингредиента = Category.ID_категории*/
 FROM Ingredient*/
 
 --CONVERT
-/*SELECT CONVERT(int,Калорийность) AS INT
+/*SELECT CONVERT(int, Калорийность) AS INT
 FROM Ingredient*/
 
 --ISNULL
 /*SELECT ISNULL(ID_ингредиента, N'Нету такого ингредиента')
 FROM Ingredient ingr*/
+
+--NULLIF
+--Если картоха, то NULL
+/*SELECT NULLIF(ID_ингредиента, N'Картоха') AS N'Ингридиенты'
+FROM Ingredient*/
