@@ -1,7 +1,7 @@
 INSERT INTO [dbo].[Cuisine]
-           ([ID_êóõíÿ]
-           ,[Íàçâàíèå_êóõíè])
+           ([ID_ÐºÑƒÑ…Ð½Ñ]
+           ,[ÐÐ°Ð·Ð²Ð°Ð½Ð¸Ðµ_ÐºÑƒÑ…Ð½Ð¸])
      VALUES
            (2
-           ,N'Ïîëüñêàÿ')
---DELETE FROM Cuisine WHERE ID_êóõíÿ > 1
+           ,N'ÐŸÐ¾Ð»ÑŒÑÐºÐ°Ñ')
+--DELETE FROM Cuisine WHERE ID_ÐºÑƒÑ…Ð½Ñ > 1
