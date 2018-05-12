@@ -34,8 +34,8 @@ VALUES
 GO
 SELECT * FROM Dish
 DROP TRIGGER Dish_count
-*/
 
+*/
 
 --INSERT 2
 /*
@@ -72,34 +72,36 @@ DROP TRIGGER Cuisine_name
 --INSERT 3
 /*
 GO
-CREATE TRIGGER Instead_Of_Insert
+Create TRIGGER Instead_Of_Insert
 ON Ingredient INSTEAD OF INSERT
-AS
-DECLARE @ID decimal
-DECLARE @Name_ingr varchar(50)
-DECLARE @Calor decimal
-DECLARE @Price decimal
-SELECT @ID = ID_ingredient,@Name_ingr = Name,@Calor = Caloricity,@Price = Price 
-FROM INSERTED
-
-SELECT @ID,@Name_ingr,@Calor,@Price
-FROM INSERTED
-IF NOT EXISTS(SELECT @Price FROM INSERTED WHERE @Price < 0)
+AS 
 BEGIN
-INSERT INTO dbo.Ingredient
-(
-  ID_ingredient
- ,Name
- ,Caloricity
- ,Price
-)
-VALUES
-(
-  @ID -- ID_ingredient - decimal NOT NULL
- ,@Name_ingr -- Name - text NOT NULL
- ,@Calor -- Caloricity - decimal NOT NULL
- ,@Price -- Price - decimal NOT NULL
-);
+	DECLARE @ID decimal
+	DECLARE @Name_ingr varchar(50)
+	DECLARE @Calor decimal
+	DECLARE @Price decimal
+	SELECT @ID = ID_ingredient,@Name_ingr = Name,@Calor = Caloricity,@Price = Price 
+	FROM INSERTED
+
+	SELECT @ID,@Name_ingr,@Calor,@Price
+	FROM INSERTED
+	IF NOT EXISTS(SELECT @Price FROM INSERTED WHERE @Price < 0)
+	BEGIN
+		INSERT INTO dbo.Ingredient
+		(
+		  ID_ingredient
+		 ,Name
+		 ,Caloricity
+		 ,Price
+		)
+		VALUES
+		(
+		  @ID -- ID_ingredient - decimal NOT NULL
+		 ,@Name_ingr -- Name - text NOT NULL
+		 ,@Calor -- Caloricity - decimal NOT NULL
+		 ,@Price -- Price - decimal NOT NULL
+		);
+	END
 END
 GO
 INSERT INTO dbo.Ingredient
@@ -119,9 +121,10 @@ VALUES
 GO
 SELECT * FROM Ingredient;
 DELETE FROM Ingredient WHERE ID_ingredient = 0;
+GO
 DROP TRIGGER Instead_Of_Insert
-*/
 
+*/
 
 --UPDATE 1
 /*
@@ -143,7 +146,6 @@ SET Cuisine_name = 'dsad'
 GO
 DROP TRIGGER Cuisine_name_Update
 */
-
 --UPDATE 2
 /*
 GO
@@ -190,7 +192,6 @@ END
 GO
 UPDATE Cuisine
 SET ID_cuisine = 1
---SET Cuisine_name = 'American'
 GO
 SELECT * FROM Cuisine;
 DELETE FROM Cuisine WHERE ID_cuisine = 2;
@@ -207,7 +208,7 @@ ON Category
 FOR DELETE
 AS
 BEGIN
- IF NOT EXISTS(SELECT * FROM DELETED INNER JOIN Category ON DELETED.ID_categoryy = Category.ID_categoryy)
+ IF NOT EXISTS(SELECT * FROM DELETED,Category WHERE DELETED.ID_categoryy = Category.ID_categoryy)
  ROLLBACK;
  PRINT('U cant delete user id')
 END;
@@ -259,3 +260,19 @@ DELETE FROM Dishes WHERE ID_dishes = 2
 GO
 DROP TRIGGER Delete_Dishes
 */
+GO
+CREATE TRIGGER DELETE_Recipe
+ON Recipe
+AFTER DELETE
+AS
+BEGIN
+  DECLARE @ID decimal
+  DECLARE @Ratin decimal
+  SELECT @ID = ID_review,@Ratin = ID_raiting FROM Review WHERE Review.ID_review IN (SELECT ID_review FROM deleted)
+  DELETE FROM Review WHERE Review.ID_review IN (SELECT ID_review FROM deleted)
+  DELETE FROM Rating WHERE Rating.ID_raiting = @Ratin
+END
+GO
+DELETE FROM Recipe WHERE ID_recipe = 1
+GO
+DROP TRIGGER DELETE_Recipe
