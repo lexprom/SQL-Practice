@@ -21,7 +21,7 @@ GO
 -- Create backup folder
 --
 IF OBJECT_ID('xp_create_subdir') IS NOT NULL
-  EXEC xp_create_subdir N'D:\Program Files\Microsoft SQL Server\MSSQL12.SQLSERVEREXP\MSSQL\Backup'
+  EXEC xp_create_subdir N'C:\Users\pakas\Documents\'
 --
 -- Backup database to the file with the name: <database_name>_<yyyy>_<mm>_<dd>_<hh>_<mi>.bak
 --
@@ -30,7 +30,7 @@ SET @db_name = N'Recipe'
 
 DECLARE @filepath NVARCHAR(4000)
 SET @filepath =
-/*define base part*/ N'D:\Program Files\Microsoft SQL Server\MSSQL12.SQLSERVEREXP\MSSQL\Backup\' + @db_name + '_' +
+/*define base part*/ N'C:\Users\pakas\Documents\' + @db_name + '_' +
 /*append date*/ REPLACE(CONVERT(NVARCHAR(10), GETDATE(), 102), '.', '_') + '_' +
 /*append time*/ REPLACE(CONVERT(NVARCHAR(5), GETDATE(), 108), ':', '_') + '.bak'
 
@@ -51,15 +51,6 @@ GO
 
 USE Recipe
 GO
-
-IF DB_NAME() <> N'Recipe' SET NOEXEC ON
-GO
---
--- Delete data from the table 'dbo.Rating'
---
-DELETE dbo.Rating
-GO
-
 --
 -- Inserting data into table dbo.Rating
 --
@@ -71,9 +62,9 @@ INSERT dbo.Rating(ID_raiting, ID_user, Recipes_count, Positive_per, Negative_per
 INSERT dbo.Rating(ID_raiting, ID_user, Recipes_count, Positive_per, Negative_per) VALUES (306, 712, 160, 8, 47)
 INSERT dbo.Rating(ID_raiting, ID_user, Recipes_count, Positive_per, Negative_per) VALUES (841, 967, 891, 38, 24)
 INSERT dbo.Rating(ID_raiting, ID_user, Recipes_count, Positive_per, Negative_per) VALUES (471, 31, 7, 30, 7)
-INSERT dbo.Rating(ID_raiting, ID_user, Recipes_count, Positive_per, Negative_per) VALUES (77, 277, 517, 4, 8)
+INSERT dbo.Rating(ID_raiting, ID_user, Recipes_count, Positive_per, Negative_per) VALUES (77,  277, 517, 4, 8)
 INSERT dbo.Rating(ID_raiting, ID_user, Recipes_count, Positive_per, Negative_per) VALUES (664, 392, 312, 16, 49)
-INSERT dbo.Rating(ID_raiting, ID_user, Recipes_count, Positive_per, Negative_per) VALUES (1000, 715, 56, 12, 36)
+INSERT dbo.Rating(ID_raiting, ID_user, Recipes_count, Positive_per, Negative_per) VALUES (1000,715, 56, 12, 36)
 INSERT dbo.Rating(ID_raiting, ID_user, Recipes_count, Positive_per, Negative_per) VALUES (939, 411, 772, 24, 35)
 INSERT dbo.Rating(ID_raiting, ID_user, Recipes_count, Positive_per, Negative_per) VALUES (572, 874, 56, 43, 20)
 INSERT dbo.Rating(ID_raiting, ID_user, Recipes_count, Positive_per, Negative_per) VALUES (842, 214, 812, 4, 50)

@@ -260,6 +260,7 @@ DELETE FROM Dishes WHERE ID_dishes = 2
 GO
 DROP TRIGGER Delete_Dishes
 */
+/*
 GO
 CREATE TRIGGER DELETE_Recipe
 ON Recipe
@@ -276,3 +277,4 @@ GO
 DELETE FROM Recipe WHERE ID_recipe = 1
 GO
 DROP TRIGGER DELETE_Recipe
+*/
