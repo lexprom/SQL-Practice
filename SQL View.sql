@@ -1,8 +1,7 @@
 ﻿USE Recipe
 GO
-
---WITH ENCYPTION
 /*
+--WITH ENCYPTION
 CREATE VIEW FirstView WITH ENCRYPTION
 AS
 SELECT U.ID_user as 'User ID', U.First_name as 'First Name', U.Last_name as 'Last Name'
@@ -13,20 +12,18 @@ GO
 EXEC sp_helptext 'FirstView'
 GO
 
-print('FirstView')
 SET statistics io on
 SET statistics time on
 
 SELECT * FROM FirstView
 
-print('FirstView')
 
 DROP VIEW FirstView
 GO
-*/
+
 
 --ON UPDATE
-/*CREATE VIEW View_INSERT
+CREATE VIEW View_INSERT
 AS
 SELECT U.First_name, U.Last_name
 FROM [User] as U
@@ -39,32 +36,34 @@ VALUES
 (996, 'Alex','Park')
 GO
 
-/*SELECT First_name FROM [User] WHERE ID_user = 996*/
 DROP VIEW View_INSERT 
+
 */
 
-
 --INDEX
-GO
 SET NUMERIC_ROUNDABORT OFF;
-SET ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL,
-ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON;
-GO
 
-GO
-CREATE VIEW View_3 WITH SCHEMABINDING 
-AS
-SELECT ID_cuisine,Cuisine_name
-FROM Cuisine
-WHERE ID_cuisine BETWEEN 1 AND 2
+SET ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, 
+ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON; 
+GO 
 
-GO
-CREATE UNIQUE CLUSTERED INDEX Index_On_View ON View_3 (ID_cuisine) 
+CREATE VIEW View2 With SCHEMABINDING 
+AS 
+SELECT ID_dish,ID_recipe,[Count]
+FROM dbo.Dish
+WHERE [Count] BETWEEN 1 AND 5 
+GO 
 
-SET STATISTICS TIME ON
+CREATE UNIQUE CLUSTERED INDEX Index_On_View2 
+ON dbo.View2 (ID_dish,ID_recipe) 
+GO 
 
-SELECT * FROM View_3
+SET STATISTICS TIME ON; 
 
-SET STATISTICS TIME OFF
-GO
-DROP VIEW View_3
+SELECT ID_dish, count(*) 
+FROM View2 WITH (NOEXPANDS) 
+group by ID_dish 
+GO 
+
+SET STATISTICS TIME OFF; 
+DROP VIEW View2
